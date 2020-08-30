@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Badrri-Narayanan/petstore/static/css/main.72501848.chunk.css",
+    "main.js": "/Badrri-Narayanan/petstore/static/js/main.2aa861a4.chunk.js",
+    "main.js.map": "/Badrri-Narayanan/petstore/static/js/main.2aa861a4.chunk.js.map",
+    "runtime-main.js": "/Badrri-Narayanan/petstore/static/js/runtime-main.4d76f9df.js",
+    "runtime-main.js.map": "/Badrri-Narayanan/petstore/static/js/runtime-main.4d76f9df.js.map",
+    "static/js/2.084f0f17.chunk.js": "/Badrri-Narayanan/petstore/static/js/2.084f0f17.chunk.js",
+    "static/js/2.084f0f17.chunk.js.map": "/Badrri-Narayanan/petstore/static/js/2.084f0f17.chunk.js.map",
+    "index.html": "/Badrri-Narayanan/petstore/index.html",
+    "precache-manifest.157379be84abd14d88d751216f3354ff.js": "/Badrri-Narayanan/petstore/precache-manifest.157379be84abd14d88d751216f3354ff.js",
+    "service-worker.js": "/Badrri-Narayanan/petstore/service-worker.js",
+    "static/css/main.72501848.chunk.css.map": "/Badrri-Narayanan/petstore/static/css/main.72501848.chunk.css.map",
+    "static/js/2.084f0f17.chunk.js.LICENSE.txt": "/Badrri-Narayanan/petstore/static/js/2.084f0f17.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4d76f9df.js",
+    "static/js/2.084f0f17.chunk.js",
+    "static/css/main.72501848.chunk.css",
+    "static/js/main.2aa861a4.chunk.js"
+  ]
+}
