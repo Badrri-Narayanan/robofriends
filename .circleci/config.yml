@@ -7,6 +7,12 @@ jobs:
       - checkout
       - run: echo "npm installing"
       - run: npm install
+      - run: echo "adding git configs"
+      - run: 
+        name: configuring git
+        command: |
+          git config user.email "badrri1995@gmail.com"
+          git config user.name "ci-build-bot"
       - run: echo "deploying to github-pages"
       - run: npm run deploy
 workflows:
