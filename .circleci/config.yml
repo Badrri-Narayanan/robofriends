@@ -1,22 +1,16 @@
 version: 2.1
 jobs:
-  dependency_install:
+  build_and_deploy:
     docker:
       - image: circleci/node:12.22.7-bullseye-browsers-legacy
     steps:
       - checkout
       - run: echo "npm installing"
       - run: npm install
-  deploy_gh_pages:
-    docker:
-      - image: circleci/node:12.22.7-bullseye-browsers-legacy
-    steps:
-      - checkout
-      - run: echo "deploying to github pages"
+      - run: echo "deploying to github-pages"
       - run: npm run deploy
 workflows:
   version: 2
   build_app:
     jobs:
-      - dependency_install
-      - deploy_gh_pages
+      - build_and_deploy
