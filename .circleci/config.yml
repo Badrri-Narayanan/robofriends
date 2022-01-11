@@ -10,11 +10,11 @@ jobs:
       - run: echo "adding git configs"
       - run: git config user.email "badrri1995@gmail.com"
       - run: git config user.name "ci-build-bot"
-      - run: echo "deploying to github-pages"
-      - run: npm run deploy
       - add_ssh_keys:
           fingerprints:
             - "4c:9a:11:aa:ca:6b:45:d0:18:91:5b:d0:f6:95:79:9b"
+      - run: echo "deploying to github-pages"
+      - run: npm run deploy
 workflows:
   version: 2
   build_app:
