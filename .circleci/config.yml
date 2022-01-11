@@ -12,6 +12,9 @@ jobs:
       - run: git config user.name "ci-build-bot"
       - run: echo "deploying to github-pages"
       - run: npm run deploy
+      - add_ssh_keys:
+          fingerprints:
+            - "43:b9:be:74:46:20:d9:b8:21:68:f8:de:2e:21:03:18"
 workflows:
   version: 2
   build_app:
