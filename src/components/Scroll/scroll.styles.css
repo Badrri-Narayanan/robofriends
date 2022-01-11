@@ -1,0 +1,5 @@
+.scroll-container {
+    overflow-y: scroll;
+    border: 1px solid black; 
+    height: 37rem;
+}

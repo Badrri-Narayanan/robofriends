@@ -1,7 +1,8 @@
 import React from 'react';
+import './scroll.styles.css';
 
 const Scroll = ({children}) => (
-    <div style={{overflowY: 'scroll', border: '1px solid black', height: '37 rem'}}>
+    <div className="scroll-container">
         {
             children
         }
