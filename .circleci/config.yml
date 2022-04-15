@@ -19,8 +19,7 @@ workflows:
   version: 2
   build_app:
     jobs:
-      - build_and_deploy
-      - deploy_to_production:
+      - build_and_deploy:
           requires:
             - build_and_deploy
           filters:
