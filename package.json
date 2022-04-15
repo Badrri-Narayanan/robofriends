@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -m 'auto commit [ci skip]' -d dist"
+    "deploy": "gh-pages -m 'auto commit [ci skip]'"
   },
   "eslintConfig": {
     "extends": [
