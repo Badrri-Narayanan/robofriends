@@ -5,12 +5,21 @@ import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 import Scroll from "../../components/Scroll/Scroll";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import { requestRobots } from "../../redux/actions";
+import { RobotDetails  } from "./App.types";
 import './App.css'
 
-const App = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
+type AppProps = {
+    searchQuery?: string
+    robotsList?: RobotDetails[]
+    onRequestRobots?: Function
+    isPending?: boolean
+    error?: any
+}
+
+const App: React.FC<AppProps> = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
 
 	useEffect(() => {
-        onRequestRobots();
+        onRequestRobots && onRequestRobots();
     }, [onRequestRobots]);
 
     if(isPending) {
@@ -22,7 +31,11 @@ const App = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
         return <h1>Something went wrong</h1>
     }
 
-    let filteredRobotList = robotsList.filter(robot => robot.username.toLowerCase().includes(searchQuery.toLocaleLowerCase()))
+    let validSearchQuery = searchQuery !== undefined ? searchQuery : ''
+
+    let filteredRobotList = robotsList !== undefined 
+                ? robotsList.filter(robot => robot.username.toLowerCase().includes( validSearchQuery.toLocaleLowerCase()))
+                : []
 
     return (
         <div className="tc">
@@ -37,14 +50,14 @@ const App = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
     )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps: any = (state: any) => ({
     searchQuery: state.searchRobots.searchQuery,
     robotsList: state.requestRobots.robotsList,
     isPending: state.requestRobots.isPending,
     error: state.requestRobots.error,
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps: any = (dispatch: any) => ({
     onRequestRobots: () => dispatch(requestRobots())
 })
 

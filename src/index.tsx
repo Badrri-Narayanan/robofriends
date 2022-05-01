@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import './index.css';
@@ -12,11 +12,14 @@ import thunkMiddleware from 'redux-thunk';
 
 const logger = createLogger();
 
-const rootReducer = combineReducers({searchRobots, requestRobots})
+const rootReducer = combineReducers<any>({searchRobots, requestRobots})
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware ,logger));
 
 const container = document.getElementById('root')
+
+if (!container) throw new Error('Failed to find the root element');
+
 const root = ReactDOM.createRoot(container)
 
 root.render(

@@ -1,10 +1,17 @@
 import { CHANGE_SEARCH_QUERY, REQUEST_ROBOTS_FAILURE, REQUEST_ROBOTS_PENDING, REQUEST_ROBOTS_SUCCESS } from "./constants"
 
-const initialStateSearch = {
+type InitialState = { searchQuery: string }
+
+const initialStateSearch: InitialState = {
     searchQuery: '',
 }
 
-export const searchRobots = (state=initialStateSearch, action={}) => {
+type Action = {
+    type?: string,
+    payload?: any
+}
+
+export const searchRobots: Function = (state=initialStateSearch, action: Action = {}) => {
     switch(action.type) {
         case CHANGE_SEARCH_QUERY:
             return { 
@@ -22,7 +29,7 @@ const initialStateRobots = {
     error: ''
 }
 
-export const requestRobots = (state=initialStateRobots, action={}) => {
+export const requestRobots = (state=initialStateRobots, action: Action = {}) => {
     switch(action.type) {
         case REQUEST_ROBOTS_PENDING:
             return {
