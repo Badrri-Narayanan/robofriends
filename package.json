@@ -30,6 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "CI=true react-scripts test --watchAll=false",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --max-warnings=0 src",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -m 'auto commit [ci skip]' -d build"

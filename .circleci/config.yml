@@ -1,25 +1,62 @@
 version: 2.1
-jobs:
-  build_and_deploy:
+
+executors:
+  node:
     docker:
-      - image: circleci/node:12.22.7-bullseye-browsers-legacy
+      - image: cimg/node:20.18
+
+commands:
+  install:
     steps:
       - checkout
-      - run: echo "npm installing"
-      - run: npm install
-      - run: echo "adding git configs"
+      - restore_cache:
+          keys:
+            - npm-v1-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          key: npm-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+
+jobs:
+  verify:
+    executor: node
+    steps:
+      - install
+      - run:
+          name: Type check
+          command: npm run typecheck
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Test
+          command: npm run test:ci
+
+  deploy:
+    executor: node
+    steps:
+      - install
       - run: git config user.email "badrri1995@gmail.com"
       - run: git config user.name "ci-build-bot"
       - add_ssh_keys:
           fingerprints:
             - "4c:9a:11:aa:ca:6b:45:d0:18:91:5b:d0:f6:95:79:9b"
-      - run: echo "deploying to github-pages"
-      - run: npm run deploy
+      - run:
+          name: Deploy to GitHub Pages
+          command: npm run deploy
+
 workflows:
-  version: 2
   build_app:
     jobs:
-      - build_and_deploy:
+      - verify:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - deploy:
+          requires:
+            - verify
           filters:
             branches:
               only:
