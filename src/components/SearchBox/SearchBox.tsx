@@ -11,6 +11,7 @@ const SearchBox = () => {
         className="pa3 ba b--green bg-lightest-blue"
         value={searchQuery}
         type="search"
+        aria-label="Search robots"
         onChange={(event) => dispatch(setSearchQuery(event.target.value))}
         placeholder="search robots"
       />

@@ -17,17 +17,28 @@ const App = () => {
   }, [dispatch]);
 
   if (isPending) {
-    return <h1>Loading</h1>;
+    return <h1 className="tc">Loading…</h1>;
   }
 
   if (error) {
     console.error(error);
-    return <h1>Something went wrong</h1>;
+    return (
+      <div className="tc">
+        <h1>Something went wrong</h1>
+        <button
+          className="pa3 ba b--green bg-lightest-blue pointer"
+          onClick={() => dispatch(fetchRobots())}
+        >
+          Try again
+        </button>
+      </div>
+    );
   }
 
   const query = searchQuery.toLowerCase();
-  const filteredRobotList = robotsList.filter((robot) =>
-    robot.username.toLowerCase().includes(query)
+  const filteredRobotList = robotsList.filter(
+    (robot) =>
+      robot.username.toLowerCase().includes(query) || robot.name.toLowerCase().includes(query)
   );
 
   return (

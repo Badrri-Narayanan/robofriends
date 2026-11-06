@@ -1,5 +1,7 @@
 .scroll-container {
     overflow-y: scroll;
-    border: 1px solid black; 
-    height: 37rem;
+    border-top: 1px solid black;
+    /* Fill the viewport below the title and search box on any screen size. */
+    height: calc(100vh - 11rem);
+    min-height: 20rem;
 }

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import './index.css';
 import 'tachyons/css/tachyons.min.css';
-import App from './containers/App/App'
+import App from './containers/App/App';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { createAppStore } from './redux/store';
 
 const store = createAppStore();
@@ -17,7 +18,9 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Provider>
   </React.StrictMode>
 )
