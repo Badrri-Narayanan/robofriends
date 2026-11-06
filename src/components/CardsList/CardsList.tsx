@@ -1,5 +1,5 @@
 import React from 'react';
-import { RobotDetails } from '../../containers/App/App.types';
+import { RobotDetails } from '../../redux/types';
 import { Card } from '../Card/Card';
 
 export const CardsList: React.FC<{ robotsList: RobotDetails[] }> = ({ robotsList }) => (

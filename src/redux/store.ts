@@ -1,17 +1,15 @@
-import { AnyAction, applyMiddleware, combineReducers, createStore, Middleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import { thunk, ThunkDispatch } from 'redux-thunk';
-import { requestRobots, searchRobots } from './reducers';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import robots from './robotsSlice';
+import search from './searchSlice';
 
-const rootReducer = combineReducers({ searchRobots, requestRobots });
+const rootReducer = combineReducers({ robots, search });
+
+export const createAppStore = () => configureStore({ reducer: rootReducer });
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>;
+export type AppStore = ReturnType<typeof createAppStore>;
+export type AppDispatch = AppStore['dispatch'];
 
-export const createAppStore = () => {
-  const middleware: Middleware[] = [thunk];
-  if (import.meta.env.DEV) {
-    middleware.push(createLogger());
-  }
-  return createStore(rootReducer, applyMiddleware(...middleware));
-};
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

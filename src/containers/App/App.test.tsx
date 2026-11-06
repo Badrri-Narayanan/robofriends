@@ -18,19 +18,24 @@ const renderApp = () =>
   );
 
 describe('App', () => {
-  afterEach(() => vi.restoreAllMocks());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
 
   it('loads robots and filters them by search query, keeping each robot avatar', async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve({ ok: true, json: () => Promise.resolve(robots) })
-    ) as unknown as typeof fetch;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve(robots) }))
+    );
+    const user = userEvent.setup();
 
     renderApp();
 
     expect(await screen.findByText('Bret')).toBeInTheDocument();
     expect(screen.getByText('Antonette')).toBeInTheDocument();
 
-    await userEvent.type(screen.getByRole('searchbox'), 'anto');
+    await user.type(screen.getByRole('searchbox'), 'anto');
 
     expect(screen.queryByText('Bret')).not.toBeInTheDocument();
     expect(screen.getByText('Antonette')).toBeInTheDocument();
@@ -41,9 +46,10 @@ describe('App', () => {
   });
 
   it('shows an error message when the request fails', async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve({ ok: false, status: 503, json: () => Promise.resolve({}) })
-    ) as unknown as typeof fetch;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.resolve({ ok: false, status: 503, json: () => Promise.resolve({}) }))
+    );
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
     renderApp();
