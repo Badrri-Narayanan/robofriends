@@ -1,18 +1,19 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { REQUEST_ROBOTS_FAILURE, REQUEST_ROBOTS_PENDING, REQUEST_ROBOTS_SUCCESS } from './constants';
 import { requestRobots } from './actions';
 
 const robots = [{ id: 1, name: 'Leanne Graham', username: 'Bret', email: 'a@b.c' }];
 
 const mockFetch = (impl: () => Promise<unknown>) => {
-  global.fetch = jest.fn(impl) as unknown as typeof fetch;
+  global.fetch = vi.fn(impl) as unknown as typeof fetch;
 };
 
 describe('requestRobots thunk', () => {
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   it('dispatches PENDING then SUCCESS with the robots', async () => {
     mockFetch(() => Promise.resolve({ ok: true, json: () => Promise.resolve(robots) }));
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
 
     await requestRobots()(dispatch);
 
@@ -24,7 +25,7 @@ describe('requestRobots thunk', () => {
 
   it('dispatches FAILURE when the response is not ok', async () => {
     mockFetch(() => Promise.resolve({ ok: false, status: 500, json: () => Promise.resolve({}) }));
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
 
     await requestRobots()(dispatch);
 
@@ -36,7 +37,7 @@ describe('requestRobots thunk', () => {
 
   it('dispatches FAILURE with the message on a network error', async () => {
     mockFetch(() => Promise.reject(new Error('Network down')));
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
 
     await requestRobots()(dispatch);
 

@@ -20,7 +20,7 @@ type AppProps = {
 const App: React.FC<AppProps> = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
 
 	useEffect(() => {
-        onRequestRobots && onRequestRobots();
+        onRequestRobots?.();
     }, [onRequestRobots]);
 
     if(isPending) {
@@ -32,9 +32,9 @@ const App: React.FC<AppProps> = ({searchQuery, robotsList, onRequestRobots, isPe
         return <h1>Something went wrong</h1>
     }
 
-    let validSearchQuery = searchQuery !== undefined ? searchQuery : ''
+    const validSearchQuery = searchQuery !== undefined ? searchQuery : ''
 
-    let filteredRobotList = robotsList !== undefined 
+    const filteredRobotList = robotsList !== undefined 
                 ? robotsList.filter(robot => robot.username.toLowerCase().includes( validSearchQuery.toLowerCase()))
                 : []
 

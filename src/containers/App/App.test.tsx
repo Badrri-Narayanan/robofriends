@@ -1,4 +1,4 @@
-import React from 'react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
@@ -18,10 +18,10 @@ const renderApp = () =>
   );
 
 describe('App', () => {
-  afterEach(() => jest.restoreAllMocks());
+  afterEach(() => vi.restoreAllMocks());
 
   it('loads robots and filters them by search query, keeping each robot avatar', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({ ok: true, json: () => Promise.resolve(robots) })
     ) as unknown as typeof fetch;
 
@@ -41,10 +41,10 @@ describe('App', () => {
   });
 
   it('shows an error message when the request fails', async () => {
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({ ok: false, status: 503, json: () => Promise.resolve({}) })
     ) as unknown as typeof fetch;
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     renderApp();
 

@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { setSearchQuery } from '../../redux/actions';
+import { AppDispatch, RootState } from '../../redux/store';
 
 type SearchBoxProps = {
     searchQuery?: string
@@ -19,11 +20,11 @@ const SearchBox: React.FC<SearchBoxProps> = ({searchQuery, setSearchQuery}) => (
 )
 
 
-const mapStateToProps: any = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
     searchQuery: state.searchRobots.searchQuery,
 })
 
-const mapDispatchToProps: any = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
     setSearchQuery: (event: ChangeEvent<HTMLInputElement>) => dispatch(setSearchQuery(event.target.value)),
 });
 
