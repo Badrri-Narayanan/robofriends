@@ -41,7 +41,7 @@ jobs:
       - run: git config user.name "ci-build-bot"
       - add_ssh_keys:
           fingerprints:
-            - "4c:9a:11:aa:ca:6b:45:d0:18:91:5b:d0:f6:95:79:9b"
+            - "SHA256:MafrUoQ+zcahmhI/OV1/UkInCAOfE2xpPGi7M/iQYBs"
       - run:
           name: Deploy to GitHub Pages
           command: npm run deploy
