@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import './scroll.styles.css';
 
-const Scroll: React.FC<{children: React.ReactChild}> = ({children}) => (
+const Scroll = ({ children }: { children: ReactNode }) => (
     <div className="scroll-container">
         {
             children

@@ -1,65 +1,57 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { CardsList } from "../../components/CardsList/CardsList";
-import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
-import Scroll from "../../components/Scroll/Scroll";
-import SearchBox from "../../components/SearchBox/SearchBox";
-import { requestRobots } from "../../redux/actions";
-import { AppDispatch, RootState } from "../../redux/store";
-import { RobotDetails } from "./App.types";
-import './App.css'
+import { useEffect } from 'react';
+import { CardsList } from '../../components/CardsList/CardsList';
+import ErrorBoundary from '../../components/ErrorBoundary/ErrorBoundary';
+import Scroll from '../../components/Scroll/Scroll';
+import SearchBox from '../../components/SearchBox/SearchBox';
+import { fetchRobots } from '../../redux/robotsSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import './App.css';
 
-type AppProps = {
-    searchQuery?: string
-    robotsList?: RobotDetails[]
-    onRequestRobots?: () => void
-    isPending?: boolean
-    error?: string
-}
+const App = () => {
+  const dispatch = useAppDispatch();
+  const { robotsList, isPending, error } = useAppSelector((state) => state.robots);
+  const searchQuery = useAppSelector((state) => state.search.searchQuery);
 
-const App: React.FC<AppProps> = ({searchQuery, robotsList, onRequestRobots, isPending, error}) => {
+  useEffect(() => {
+    dispatch(fetchRobots());
+  }, [dispatch]);
 
-	useEffect(() => {
-        onRequestRobots && onRequestRobots();
-    }, [onRequestRobots]);
+  if (isPending) {
+    return <h1 className="tc">Loading…</h1>;
+  }
 
-    if(isPending) {
-        return <h1>Loading</h1>
-    }
-
-    if(error) {
-        console.error(error)
-        return <h1>Something went wrong</h1>
-    }
-
-    let validSearchQuery = searchQuery !== undefined ? searchQuery : ''
-
-    let filteredRobotList = robotsList !== undefined 
-                ? robotsList.filter(robot => robot.username.toLowerCase().includes( validSearchQuery.toLowerCase()))
-                : []
-
+  if (error) {
+    console.error(error);
     return (
-        <div className="tc">
-            <h1>RoboFriends</h1>
-            <SearchBox />
-            <Scroll>
-                <ErrorBoundary>
-                    <CardsList robotsList={filteredRobotList} />
-                </ErrorBoundary>
-            </Scroll>
-        </div>
-    )
-}
+      <div className="tc">
+        <h1>Something went wrong</h1>
+        <button
+          className="pa3 ba b--green bg-lightest-blue pointer"
+          onClick={() => dispatch(fetchRobots())}
+        >
+          Try again
+        </button>
+      </div>
+    );
+  }
 
-const mapStateToProps = (state: RootState) => ({
-    searchQuery: state.searchRobots.searchQuery,
-    robotsList: state.requestRobots.robotsList,
-    isPending: state.requestRobots.isPending,
-    error: state.requestRobots.error,
-})
+  const query = searchQuery.toLowerCase();
+  const filteredRobotList = robotsList.filter(
+    (robot) =>
+      robot.username.toLowerCase().includes(query) || robot.name.toLowerCase().includes(query)
+  );
 
-const mapDispatchToProps = (dispatch: AppDispatch) => ({
-    onRequestRobots: () => dispatch(requestRobots())
-})
+  return (
+    <div className="tc">
+      <h1>RoboFriends</h1>
+      <SearchBox />
+      <Scroll>
+        <ErrorBoundary>
+          <CardsList robotsList={filteredRobotList} />
+        </ErrorBoundary>
+      </Scroll>
+    </div>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
